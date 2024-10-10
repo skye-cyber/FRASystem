@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DropDown</title>
+    <link href="styles2.css" rel="stylesheet">
+</head>
+<body>
+    <button id="button" style="color: teal;" onclick="show()">Menu</button>
+        <span class="ops" id="ops" style="display: none;" onmouseleave="">
+        <option>Admin Login</option>
+        <option>Register/Sign Up</option>
+        <option>Login</option>
+        <option>Clock In</option>
+        </span>
+    <script>
+        function show(){
+            const button = document.getElementById('button');
+            const ops = document.getElementById('ops');
+            ops.classList.toggle('ops');
+            ops.style.display = "block"
+            ops.style.backgroundColor = "cyan"
+            ops.style.alignItems = "left"
+            ops.style.width = "fit-content"
+            ops.style.position = "relative"
+            ops.style.padding = "6px 8px 6px 16px"
+            ops.style.fontSize = "20px"
+            ops.addEventListener('mouseleave', () =>{
+                ops.style.display = "none"
+            });
+        };
+
+        function hide(){
+            const ops = document.getElementById('ops');
+            ops.addEventListener('mouseleave', () =>{
+                ops.style.display = "none"
+            });
+        };
+    </script>
+</body>
+</html>

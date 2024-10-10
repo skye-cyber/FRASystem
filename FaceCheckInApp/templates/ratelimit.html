@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate Limit Exceeded</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white shadow-md rounded-lg p-8 text-center">
+        <h1 class="text-3xl font-bold mb-4">Rate Limit Exceeded</h1>
+        <p class="text-gray-600 mb-6">You have exceeded the request rate limit. Please wait for the countdown to complete before trying again.</p>
+        <div id="countdown" class="text-6xl font-bold text-red-500 mb-8">60</div>
+        <button id="redirect-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+            Redirect to Previous Page
+        </button>
+    </div>
+
+    <script>
+        let countdownTimer = 60;
+        const countdownElement = document.getElementById('countdown');
+        const redirectButton = document.getElementById('redirect-btn');
+
+        function updateCountdown() {
+            countdownElement.textContent = countdownTimer;
+            countdownTimer--;
+
+            if (countdownTimer < 0) {
+                clearInterval(countdownInterval);
+                redirectButton.click();
+            }
+        }
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>

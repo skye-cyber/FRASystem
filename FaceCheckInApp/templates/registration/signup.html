@@ -1,0 +1,165 @@
+{% extends 'registration/login.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block styles %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/css.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sign.css' %}">
+      <script src="https://cdn.ilwindcss.com"></script>
+    {% endblock %}
+    {% block title %}
+    <title>FaceCheckIn-Register</title>
+    {% endblock %}
+</head>
+{% block bodystart %}
+<body class="bg-blue-500 font-sans leading-normal tracking-normal">
+    <section class="bg-blue-500 py-8">
+        <div class="container mx-auto px-6">
+            <h2 class="p-1 bg-blue-800 rounded-lg my-0 text-2xl lg:text-3xl font-semibold leading-tight text-center text-white">
+                👋 Welcome to FRA System Registration
+            </h2>
+{% endblock %}
+            {% block content %}
+            <div class="flex justify-center pt-6 pb-8">
+                <a href="{% url 'login' %}" class="bg-teal-500 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline mr-1 mb-1">
+                    Login
+                </a>
+            </div>
+            <div class="w-full md:w-4/12 lg:w-2/5 mx-auto">
+                <div class="bg-blue-100 text-gray-600 rounded-lg relative flex flex-col">
+                        <div class="px-6 py-4">
+                            <div class="text-3xl font-semibold text-center text-gray-800">
+                                Register
+                            </div>
+                        </div>
+                        <div class="border-t-2 border-gray-300"></div>
+                        <div class="flex-auto px-4 lg:px-10 py-10">
+                            {% block form_action %}
+                        <form method="post" action="{% url 'signup' %}">
+
+                            {% endblock %}
+                            {% csrf_token %}
+                            <section class="grid grid-cols-1 lg:grid-cols-2 justify-around gap-4">
+                                <div class="relative mb-4">
+                                    <label for="first_name" class="leading-7 text-sm text-gray-600">First Name</label>
+                                    {{ form.first_name }}
+                                    {% if form.first_name.errors %}
+                                        <ul class="alert alert-danger text-red text-sm">
+                                            {% for error in form.first_name.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+
+                                <div class="relative mb-4">
+                                    <label for="last_name" class="leading-7 text-sm text-gray-600">Last Name</label>
+                                    {{ form.last_name }}
+                                    {% if form.last_name.errors %}
+                                        <ul class="alert alert-danger text-redtext-sm">
+                                            {% for error in form.last_name.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+
+                                <div class="relative mb-4">
+                                    <label for="username" class="leading-7 text-sm text-gray-600">Username</label>
+                                    {{ form.username }}
+                                    {% if form.username.errors %}
+                                        <ul class="alert alert-danger text-red text-sm">
+                                            {% for error in form.username.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+
+                                <div class="relative mb-4">
+                                    <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
+                                    {{ form.email }}
+                                    {% if form.email.errors %}
+                                        <ul class="alert alert-danger text-red text-sm">
+                                            {% for error in form.email.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+
+                                <div class="relative mb-4">
+                                    <label for="phone_number" class="leading-7 text-sm text-gray-600">Mobile Number</label>
+                                    {{ form.phone_number }}
+                                    {% if form.phone_number.errors %}
+                                        <ul class="alert alert-danger text-red text-sm">
+                                            {% for error in form.phone_number.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+
+                                <div class="relative mb-4">
+                                    <label for="password1" class="leading-7 text-sm text-gray-600">Password</label>
+                                    {{ form.password1 }}
+                                    <!--<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>-->
+                                    {% if form.password1.errors %}
+                                        <ul class="alert alert-danger text-redtext-sm">
+                                            {% for error in form.password1.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+
+                                <div class="relative mb-4">
+                                    <label for="password2" class="leading-7 text-sm text-gray-600">Confirm Password</label>
+                                    {{ form.password2 }}
+                                    <!--<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>-->
+                                    {% if form.password2.errors %}
+                                        <ul class="alert alert-danger text-red text-sm">
+                                            {% for error in form.password2.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                    </div>
+                                {% block submit %}
+                                <div class="relative mb-4">
+                                    <button type="submit" class="bg-teal-500 text-white active:bg-teal-600 font-bold    uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none w-full mt-7">
+                                    Register
+                                    </button>
+                                </div>
+                                {% endblock %}
+                                </section>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+        </div>
+    </section>
+    <script>
+document.querySelectorAll('.field-icon').forEach(item => {
+    item.addEventListener('click', event => {
+        let input = item.previousElementSibling; // Get the preceding input element
+        if (input.getAttribute('type') === 'password') {
+            input.setAttribute('type', 'text');
+            item.classList.remove('fa-eye');
+            item.classList.add('fa-eye-slash');
+        } else {
+            input.setAttribute('type', 'password');
+            item.classList.remove('fa-eye-slash');
+            item.classList.add('fa-eye');
+        }
+    });
+});
+
+    </script>
+</body>
+</html>

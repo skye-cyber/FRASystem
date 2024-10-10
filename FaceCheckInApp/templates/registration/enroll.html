@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% block title %}
+    <title>Register Employee</title>
+  {% endblock %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body class="bg-gray-800 font-sans leading-normal tracking-normal overflow-x-hidden">
+  <nav class="w-full flex items-center justify-between bg-blue-800 p-6">
+      <div class="relative flex items-center justify-between w-full">
+        <button class="bt-hover font-bold bg-blue-500 rounded-lg px-4 py-1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown()">
+          Menu
+        </button>
+            <ul style="display: none;" class="menu-hover dropdown-menu flex w-fit items-center text-gray-200 hover:text-white dropdown-container absolute left-0 mt-2 w-48 bg-white rounded-lg overflow-hidden shadow-md" id="dropdown-menu">
+              <li class="px-4 py-2 border-b text-lg md:text-3xl border-gray-200">
+              <a href="{% url 'profile' %}" class="text-gray-600 hover:text-gray-900">Profile</a>
+              </li>
+            </ul>
+          <p class="text-center mx-auto font-bold">User: <i><a class="menu-hover text-white font-bold" href="{% url 'profile' %}">{{ user }}</a></i></p>
+          <button class="font-bold">
+              <a href="{% url 'home' %}" class="bt-hover text-black">🏠Home</a>
+          </button>
+        </div>
+    </nav>
+
+  <section class="">
+    <div class="container justify-center mx-auto flex px-6 py-4 items-center">
+      {% block head1 %}
+      <h1 class="text-white text-center text-5xl font-bold ">
+        Enrollment Hub
+      </h1>
+      {% endblock %}
+    </div>
+  </section>
+
+  <section class="focus container py-2">
+  {% block button %}
+  <button class=" snap font-bold shadow-md text-white bg-blue-500 p-2 rounded" onclick="startEnroll()">Start Camera</button>
+  <p class="text-white text-center">Press <i class="font-bold text-green">Start camera</i> then <i class="font-bold text-green">enter key</i> to enroll</p>
+  {% endblock %}
+</section>
+{% block stream %}
+<section class="container md:flex-alt ml-auto gap-4">
+  <video class="snap-stream container-stream bd-blue-100 mb-2 border-2 justify-center rounded bg-blue-100 h-64 w-72" id="mainVideo" autoplay></video>
+</section>
+{% endblock %}
+  <p id="message" class="text-white pb-8 text-center text-green font-bold"></p>
+  {% block success %}
+  {% endblock %}
+
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-danger text-center text-sm" style="color: yellow;">{{ message }}</div>
+  {% endfor %}
+  {% endif %}
+
+  <!--Scripts - JS-->
+  {% block script %}
+  <script>
+    let isDisplayed = false;
+
+function toggleDropdown() {
+  const ops = document.getElementById('dropdown-menu');
+
+  if (!isDisplayed) {
+      // Show the dropdown menu
+      ops.style.display = "flex";
+      isDisplayed = true;
+
+      // Hide menu once mouse leaves it
+      ops.addEventListener('mouseleave', () => {
+          ops.style.display = "none";
+          isDisplayed = false;
+      });
+
+  } else {
+      // Hide the dropdown menu
+      ops.style.display = "none";
+      isDisplayed = false;
+  }
+}
+
+// Optional: Hide the dropdown when clicking outside or when the button is clicked again
+document.addEventListener('click', function(event) {
+  const ops = document.getElementById('dropdown-menu');
+  const button = document.getElementById('dropdown-button');
+
+  if (!button.contains(event.target)) {
+      ops.style.display = "none";
+      isDisplayed = false;
+  }
+});
+  function hide(){
+     const ops = document.getElementById('ops');
+     ops.addEventListener('mouseleave', () =>{
+     ops.style.display = "none"
+    });
+};
+
+  
+
+  //Handle camera snaps
+  function startEnroll(){
+        startCamera();
+
+      document.addEventListener('keydown', async function(event) {
+          if (event.key === 'Enter') {
+              await registerEmployee();
+          }
+      }); 
+ // });
+}
+
+async function registerEmployee() {
+    const video = document.querySelector('video');
+    const photos = [];
+
+    for (let i = 0; i < 3; i++) {
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        photos.push(canvas.toDataURL('image/png'));
+    }
+
+    const response = await fetch('/enroll/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({ photos })
+    });
+
+    const data = await response.json();
+    document.getElementById('message').innerText = data.status === 'success' ? 'Registration successful' : 'Registration failed';
+}
+
+async function startCamera() {
+    try {
+        const video = document.querySelector('video');
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+    } catch (err) {
+        console.error('Error accessing the camera: ', err);
+        document.getElementById('message').innerText = 'Error accessing the camera';
+    }
+}
+
+        //window.onload = startCamera;
+  </script>
+  {% endblock %}
+</body>
+</html>

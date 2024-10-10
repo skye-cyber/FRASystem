@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      {% load static %}
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      {% block styles %}
+      <link rel="stylesheet" href="{% static 'css/login.css' %}">
+      <!--<link href="/home/skye/FaceRecog/FRASystem/FaceCheckIn/FaceCheckInApp/static/css/login.css" rel="stylesheet">-->
+      {% endblock %}
+
+      {% block title %}
+      <title>FaceCheckIn-Login</title>
+      {% endblock %}
+    </head>
+          {% block bodystart %}
+    <body class="bg-gray-100 mb-2 font-sans leading-normal tracking-normal">
+        <section class="bg-white py-8">
+          <div class="container mx-auto px-6">
+            <h2 class="w-full my-2 text-5xl font-semibold leading-tight text-center text-gray-800">
+            👋 Welcome to FRA System
+            </h2>
+          {% endblock %}
+            {% block content %}
+            <section class="form-section bg-blue-100 rounded-lg px-4 pb-8">
+              <div class="flex justify-center py-4">
+                <a href="{% url 'getSignupPage' %}" class="bg-teal-500 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1">
+                Register
+                </a>
+              </div>
+              <div class="w-full md:w-4/12 lg:w-3/12 mx-auto">
+              <div class="bg-white text-gray-600 rounded-lg relative flex flex-col">
+              <div class="px-6 py-4">
+              <div class="text-3xl font-semibold text-center text-gray-800">
+                Login
+              </div>
+              </div>
+              <div class="border-t-2 border-gray-300"></div>
+                  <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+                      {% block form_action %}
+                    <form method="post" target="_self" action="{% url 'login' %}">
+                        {% endblock %}
+                        {% csrf_token %}
+                        <div class="relative mb-4">
+                            <label for="username" class="leading-7 text-sm text-gray-600">Username</label>
+                            {{ form.username }}
+                            {% if form.username.errors %}
+                            <ul class="alert alert-danger text-red text-sm">{{ message }}
+                            {% for error in form.username.errors %}
+                                <li>{{ error }}</ul>
+                            {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                        <div class="relative mb-4">
+                            <label for="password" class="leading-7 text-sm text-gray-600">Password</label>
+                            {{ form.password }}
+                            {% if form.password.errors %}
+                            <ul class="alert alert-danger text-red text-sm">{{ message }}
+                            {% for error in form.password.errors %}
+                                <li>{{ error }}</ul>
+                            {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+
+                        {% block submit %}
+                        <div class="relative mb-4">
+                            <button type="submit" name="Login" class="bg-teal-500 text-white active:bg-teal-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none w-full">
+                            👨‍💻 Login
+                            </button>
+                            {% endblock %}
+                        </div>
+                    </form>
+                    </div>
+                  </div>
+              </div>
+            </section>
+            {% endblock %}
+          </div>
+        </section>
+  </body>
+</html>
+

@@ -1,0 +1,209 @@
+{% extends 'enroll.html' %}
+{% load static %}
+    {% block title %}
+    <title>Clock-In</title>
+    {% endblock %}
+    {% block head1 %}
+    <h1 class="text-white text-5xl md:3xl font-bold ">
+      Clock-In
+    </h1>
+    {% endblock %}
+    {% block button %}
+    <button class="snap snap-bt shadow-md text-white bg-blue-500 p-2 rounded" onclick="startRecognition()">Clock-In</button>
+    {% endblock %}
+
+    {% block stream %}
+    <section class="container md:flex-alt ml-auto gap-4">
+        <video class="snapv container-stream bd-blue-100 mb-2 border-2 justify-center rounded bg-blue-100 h-64 w-72" id="mainVideo" autoplay></video>
+        <img class="snapv container-stream bd-blue-100 justify-center rounded bg-blue-100 h-64 w-72" id="processedVideo"/>
+      </section>
+    {% endblock %}
+
+    {% block success %}
+    <p id="msg" style="color: green;" class="text-white pb-8 text-center text-red font-bold"></p>
+    {% endblock %}
+
+<!--audio elements-->
+<!--on success-->
+<audio id="posmatch">
+    <source src="{% static 'audio/Confirm.mp3' %}" type="audio/mp3">
+</audio>
+<audio id="TaskCompleted">
+    <source src="{% static 'audio/TaskCompleted.mp3' %}" type="audio/mp3">
+</audio>
+<!--on no match-->
+<audio id="negmatch">
+    <source src="{% static 'audio/NegativeMatch.mp3' %}" type="audio/mp3">
+</audio>
+
+    {% block script %}
+<script>
+let recognitionAttempts = 0;
+const maxAttempts = 10;
+let isProcessing = false;
+let isRecognized = false; // Flag to check if recognition is successful
+let videoStream = null;
+
+async function startRecognition() {
+    recognitionAttempts = 0;
+    isRecognized = false; // Reset the recognition flag
+    captureFrame(); // Start capturing the first frame
+}
+
+async function captureFrame() {
+    if (recognitionAttempts >= maxAttempts || isRecognized) {
+        document.getElementById('message').innerText = isRecognized 
+            ? 'Face recognized successfully' 
+            : 'Recognition attempts finished';
+        return;
+    }
+
+    if (isProcessing) {
+        return;
+    }
+
+    isProcessing = true;
+
+    const mainVideo = document.getElementById('mainVideo');
+    const canvas = document.createElement('canvas');
+    canvas.width = mainVideo.videoWidth;
+    canvas.height = mainVideo.videoHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(mainVideo, 0, 0, canvas.width, canvas.height);
+
+    const photo = canvas.toDataURL('image/png');
+
+    const response = await fetch('/process_frames/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({ photo })
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'error') {
+        document.getElementById('message').innerText = data.message;
+        console.error(data.message);
+        isProcessing = false;
+        return;
+    }
+
+    displayProcessedFrame(data.processed_frame);
+
+    if (data.status === 'success') {
+        document.getElementById('message').innerText = `Attendance marked for ${data.employee}`;
+        ///play success audio/////
+        playAudiopos();
+        playAudiocomp();
+        stopAudiopos();
+        isRecognized = true; // Set the flag to indicate recognition success
+    } else {
+        document.getElementById('message').innerText = 'Not match Found';
+        ///play negative match audio////
+        playAudioneg();
+        stopAudioneg();
+        recognitionAttempts++;
+    }
+
+    isProcessing = false;
+
+/////// Only capture next frame if recognition failed//////
+    if (!isRecognized) {
+        setTimeout(captureFrame, 1000); // Delay before capturing next frame (adjust as needed)
+    }
+}
+
+function displayProcessedFrame(processedFrame) {
+    const processedVideo = document.getElementById('processedVideo');
+    const blob = b64toBlob(processedFrame, 'image/jpeg');
+    const url = URL.createObjectURL(blob);
+    processedVideo.src = url;
+}
+
+function b64toBlob(b64Data, contentType) {
+    contentType = contentType || '';
+    const sliceSize = 512;
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+}
+
+async function startCamera() {
+    try {
+        const mainVideo = document.getElementById('mainVideo');
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        mainVideo.srcObject = stream;
+        videoStream = stream;
+
+        mainVideo.play();
+        startRecognition(); // Start recognition after the camera starts
+    } catch (err) {
+        console.error('Error accessing the camera: ', err);
+        document.getElementById('message').innerText = 'Error accessing the camera';
+    }
+}
+
+//Play audios
+var audiopos = document.getElementById('posmatch');
+var audiocomp = document.getElementById('TaskCompleted');
+var audioneg = document.getElementById('negmatch');
+
+//Success audios
+/////////wambua////////////////////////////////////////
+function playAudiopos() {
+    audiopos.play();
+}
+
+function playAudiocomp() {
+    audiocomp.play();
+}
+
+////////////////Reset audio///////////////////////////////
+function stopAudiopos() {
+    audiopos.pause();
+    audiocomp.pause();
+    audiopos.currentTime = 0; // Reset audio to the beginning
+    audiocomp.currentTime = 0;
+}
+
+function stopAudioneg() {
+    audioneg.pause();
+    audioneg.currentTime();
+}
+//Failure audio
+/////////wambua/////////////////////////////////////////
+function playAudioneg() {
+    audioneg.play();
+}
+function playAudioneg() {
+    audioneg.pause();
+    audioneg.currentTime = 0;
+}
+
+
+
+
+//start camera when page loads
+
+window.onload = startCamera;
+
+
+</script>
+{% endblock %}
