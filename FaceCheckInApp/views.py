@@ -235,8 +235,14 @@ def GetProfilePage(request):
     clock_in_data = [{'name': record.user.get_full_name(), 'clock_in_time': record.clock_in_time}
                      for record in attendance_records]
 
-    enrollment_data = [{'name': record.user.get_full_name(), 'enrolled_at': record.enrolled_at}
-                       for record in enrollment_records]
+    # Include photo1 in the enrollment_data (add checks if needed)
+    enrollment_data = [{
+        'name': record.user.get_full_name(),
+        'enrolled_at': record.enrolled_at,
+        'photo1_url': record.photo1.url if record.photo1 else None,
+        'photo2_url': record.photo2.url if record.photo2 else None,
+        'photo3_url': record.photo3.url if record.photo3 else None  # Add the URL for photo1
+    } for record in enrollment_records]
 
     context = {
         'clock_in_data': clock_in_data,
@@ -280,8 +286,7 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    messages.success(
-                        request, f'Welcome, {cd["username"]}. You are now logged in.')
+                    # messages.success(request, f'Welcome, {cd["username"]}. You are now logged in.')
                     return redirect('home')
 
                 else:
@@ -290,15 +295,18 @@ def user_login(request):
 
             else:
                 messages.error(request, 'Incorrect login credentials')
-                # Using <script> tags directly in messages is not a good practice and can introduce security vulnerabilities, such as cross-site scripting (XSS) attacks.
-                # HttpResponse('<script>alert("Incorrect credentials")</script>')
+                print('Incorrect username or password.')
+                form = LoginForm()
+                return render(request, 'registration/login.html', {'form': form})
 
         else:
             messages.error(request, 'Invalid username or password.')
+            form = LoginForm()
+            print('Invalid username or password.')
+            return render(request, 'registration/login.html', {'form': form})
 
     # When the user_login view is submitted via GET request a new login form is Instantiated with for = LoginForm() to display it in the template.
     else:
-        # form = LoginForm()
         form = LoginForm()
     return render(request, 'registration/login.html', {'form': form})
 

@@ -141,28 +141,28 @@
         }
 
         async function startCamera() {
-            try {
-                const mainVideo = document.getElementById('mainVideo');
+        try {
+            const mainVideo = document.getElementById('mainVideo');
 
-                // Check if getUserMedia is supported
-                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            // Check if getUserMedia is supported
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
 
-                    // Use the stream here
-                    mainVideo.srcObject = stream; // Assign the stream to the video element
-                    videoStream = stream; // Assuming videoStream is defined elsewhere
+                // Use the stream here
+                mainVideo.srcObject = stream; // Assign the stream to the video element
+                videoStream = stream; // Assuming videoStream is defined elsewhere
 
-                    mainVideo.play(); // Start playing the video
-                    startRecognition(); // Start recognition after the camera starts
-                } else {
-                    console.error("getUserMedia is not supported in this browser.");
-                    document.getElementById('message').innerText = 'getUserMedia is not supported in this browser.';
-                }
-            } catch (err) {
-                console.error('Error accessing the camera: ', err);
-                document.getElementById('message').innerText = 'Error accessing the camera';
+                mainVideo.play(); // Start playing the video
+                startRecognition(); // Start recognition after the camera starts
+            } else {
+                console.error("getUserMedia is not supported in this browser.");
+                document.getElementById('message').innerText = 'getUserMedia is not supported in this browser.';
             }
+        } catch (err) {
+            console.error('Error accessing the camera: ', err);
+            document.getElementById('message').innerText = 'Error accessing the camera';
         }
+    }
 
 
         // Start camera when page loads

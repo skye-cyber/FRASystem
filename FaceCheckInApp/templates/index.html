@@ -6,20 +6,21 @@
     <title>FRA System</title>
     {% load static %}
     {% block styles %}
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'css/styles2.css' %}" rel="stylesheet">
     {% endblock %}
 </head>
 {% block bodystart %}
   <body class="bg-gray-800 font-sans leading-normal tracking-normal">
     {% endblock %}
-    <nav class="block items-center justify-between w-full flex-wrap bg-blue-800 p-4">
+    <nav class="block items-center justify-between w-full flex-wrap bg-blue-800 p-1">
       <div class="relative flex">
-        <button class="menu-hover font-bold bg-blue-500 rounded-lg px-4 py-1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown()">
+        {% block bt %}
+        <button style="z-index: 999; position: fixed;" class="fixed menu-hover font-bold bg-blue-500 rounded-lg px-4 py-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown()">
             Menu
           </button>
-          <!--<svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1l-1.4-1.4 4.8-4.8-1.4-1.4-1.4 1.4 4.8 4.8zm-3.2-3.2l1.4-1.4 4.8 4.8-1.4 1.4 1.4-1.4-4.8-4.8zm13.7 5.4l-1.4-1.4-4.8 4.8 1.4 1.4-1.4 1.4 4.8-4.8zm-3.2-3.2l1.4-1.4-4.8 4.8 1.4 1.4 1.4-1.4 4.8-4.8z"/></svg>-->
+        {% endblock %}
           {% block navbar %}
-          <ul style="display: none;" class="dropdown-menu flex items-center w-fit text-gray-200 hover:text-white dropdown-container absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-md" id="dropdown-menu">
+          <ul style="display: none; z-index: 999; position: fixed; box-shadow: 0px 0px 0px 4px deepskyblue;" class="dropdown-menu border-full flex items-center w-fit text-gray-200 hover:text-white dropdown-container absolute ml-2 mt-10 w-48 bg-white rounded-lg shadow-md" id="dropdown-menu">
             <li class="px-4 py-2 border-b border-gray-200"><a href="{% url 'getEnrollPage' %}" class="menu-hover text-gray-600 hover:text-gray-900">Enroll FRA</a></li>
             <!--<li class="px-4 py-2 border-b border-gray-200"><a href="{% url 'signup' %}" class="text-gray-600 hover:text-gray-900 hover:bg-cyan">Register/Sign Up</a></li>-->
             <li class="px-4 py-2 border-b border-gray-200"><a href="{% url 'profile' %}" class="menu-hover text-gray-600 hover:text-gray-900">Profile</a></li>
@@ -38,7 +39,7 @@
     
     if (!isDisplayed) {
         // Show the dropdown menu
-        ops.style.display = "flex";
+        ops.style.display = "block";
         isDisplayed = true;
 
         // Hide menu once mouse leaves it
@@ -73,9 +74,9 @@ document.addEventListener('click', function(event) {
   
   </script>
 
-  <section class="bg-blue-800 py-0">
+  <section class="bg-blue-800 pb-2">
     <p class="text-center">User: <i><a class="menu-hover text-white" href="{% url 'profile' %}">{{user}}</a></i></p>
-    <div class="container mx-auto flex px-6 py-2 items-center justify-center">
+    <div class="container mx-auto flex items-center justify-center">
       <h1 class="text-white text-3xl lg:text-5xl font-bold ">
         FRA System
       </h1>

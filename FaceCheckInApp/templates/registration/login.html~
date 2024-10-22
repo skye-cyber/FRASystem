@@ -24,7 +24,7 @@
             </h2>
           {% endblock %}
             {% block content %}
-            <section class="form-section bg-blue-100 rounded-lg px- pb-8">
+            <section class="form-section bg-blue-100 rounded-lg px-4 pb-8">
               <div class="flex justify-center py-4">
                 <a href="{% url 'getSignupPage' %}" class="bg-teal-500 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1">
                 Register
@@ -47,23 +47,23 @@
                             <label for="username" class="leading-7 text-sm text-gray-600">Username</label>
                             {{ form.username }}
                             {% if form.username.errors %}
-                            <ul class="alert alert-danger text-red text-sm">{{ message }}
-                            {% for error in form.username.errors %}
-                                <li>{{ error }}</ul>
-                            {% endfor %}
-                            </ul>
+                              <ul style="color: red" class="alert alert-danger text-red text-sm">{{ message }}
+                                {% for error in form.username.errors %}
+                                  <li>{{ error }}</ul>
+                                {% endfor %}
+                              </ul>
                             {% endif %}
                         </div>
                         <div class="relative mb-4">
                             <label for="password" class="leading-7 text-sm text-gray-600">Password</label>
-                            {{ form.password }}
-                            {% if form.password.errors %}
-                            <ul class="alert alert-danger text-red text-sm">{{ message }}
-                            {% for error in form.password.errors %}
-                                <li>{{ error }}</ul>
-                            {% endfor %}
-                            </ul>
-                            {% endif %}
+                              {{ form.password }}
+                              {% if form.password.errors %}
+                                <ul style="color: red" class="alert alert-danger text-red text-sm">{{ message }}
+                                  {% for error in form.password.errors %}
+                                    <li>{{ error }}</ul>
+                                {% endfor %}
+                                </ul>
+                              {% endif %}
                         </div>
 
                         {% block submit %}

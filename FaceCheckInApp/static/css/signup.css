@@ -926,3 +926,7 @@ video {
     line-height: 2.25rem;
   }
 }
+
+.text-red{
+  color:red;
+}

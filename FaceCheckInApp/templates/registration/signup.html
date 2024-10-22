@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block styles %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/css.css' %}">
-    <link rel="stylesheet" href="{% static 'css/sign.css' %}">
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
       <script src="https://cdn.ilwindcss.com"></script>
     {% endblock %}
     {% block title %}
@@ -48,7 +47,7 @@
                                     <label for="first_name" class="leading-7 text-sm text-gray-600">First Name</label>
                                     {{ form.first_name }}
                                     {% if form.first_name.errors %}
-                                        <ul class="alert alert-danger text-red text-sm">
+                                        <ul style="color: red" class="text-red text-sm">
                                             {% for error in form.first_name.errors %}
                                                 <li>{{ error }}</li>
                                             {% endfor %}
@@ -60,7 +59,7 @@
                                     <label for="last_name" class="leading-7 text-sm text-gray-600">Last Name</label>
                                     {{ form.last_name }}
                                     {% if form.last_name.errors %}
-                                        <ul class="alert alert-danger text-redtext-sm">
+                                        <ul style="color: red" class="text-red text-sm">
                                             {% for error in form.last_name.errors %}
                                                 <li>{{ error }}</li>
                                             {% endfor %}
@@ -69,10 +68,10 @@
                                 </div>
 
                                 <div class="relative mb-4">
-                                    <label for="username" class="leading-7 text-sm text-gray-600">Username</label>
+                                    <label for="username" class="leading-7 text-sm text-gray-600">Username*</label>
                                     {{ form.username }}
                                     {% if form.username.errors %}
-                                        <ul class="alert alert-danger text-red text-sm">
+                                        <ul style="color: red" class="text-red text-sm">
                                             {% for error in form.username.errors %}
                                                 <li>{{ error }}</li>
                                             {% endfor %}
@@ -81,10 +80,10 @@
                                 </div>
 
                                 <div class="relative mb-4">
-                                    <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
+                                    <label for="email" class="leading-7 text-sm text-gray-600">Email*</label>
                                     {{ form.email }}
                                     {% if form.email.errors %}
-                                        <ul class="alert alert-danger text-red text-sm">
+                                        <ul style="color: red" class="text-red text-sm">
                                             {% for error in form.email.errors %}
                                                 <li>{{ error }}</li>
                                             {% endfor %}
@@ -96,7 +95,7 @@
                                     <label for="phone_number" class="leading-7 text-sm text-gray-600">Mobile Number</label>
                                     {{ form.phone_number }}
                                     {% if form.phone_number.errors %}
-                                        <ul class="alert alert-danger text-red text-sm">
+                                        <ul style="color: red" class="text-red text-sm">
                                             {% for error in form.phone_number.errors %}
                                                 <li>{{ error }}</li>
                                             {% endfor %}
@@ -105,11 +104,11 @@
                                 </div>
 
                                 <div class="relative mb-4">
-                                    <label for="password1" class="leading-7 text-sm text-gray-600">Password</label>
+                                    <label for="password1" class="leading-7 text-sm text-gray-600">Password*</label>
                                     {{ form.password1 }}
                                     <!--<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>-->
                                     {% if form.password1.errors %}
-                                        <ul class="alert alert-danger text-redtext-sm">
+                                        <ul style="color: red" class="text-red text-sm">
                                             {% for error in form.password1.errors %}
                                                 <li>{{ error }}</li>
                                             {% endfor %}
@@ -118,11 +117,11 @@
                                 </div>
 
                                 <div class="relative mb-4">
-                                    <label for="password2" class="leading-7 text-sm text-gray-600">Confirm Password</label>
+                                    <label for="password2" class="leading-7 text-sm text-gray-600">Confirm Password*</label>
                                     {{ form.password2 }}
                                     <!--<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>-->
                                     {% if form.password2.errors %}
-                                        <ul class="alert alert-danger text-red text-sm">
+                                        <ul style="color: red" class="text-red text-sm">
                                             {% for error in form.password2.errors %}
                                                 <li>{{ error }}</li>
                                             {% endfor %}

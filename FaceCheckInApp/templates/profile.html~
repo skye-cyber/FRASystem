@@ -22,7 +22,7 @@
     </button>
 
     {% block navbar %}
-    <ul id="dropdown-menu" style="display:none; z-index: 999; position: fixed; box-shadow: 0px 0px 0px 4px deepskyblue;" class="menu-hover dropdown-menu w-fit items-center text-gray-200 dropdown-container absolute ml-2 mt-10 w-48 bg-white rounded-lg overflow-hidden shadow-md">
+    <ul id="dropdown-menu" style="display:none; z-index: 999; position: fixed; box-shadow: 0px 0px 0px 4px deepskyblue;" class="menu-hover dropdown-menu w-fit items-center text-gray-200 dropdown-container absolute mt-10 w-48 bg-white rounded-lg overflow-hidden shadow-md">
       <li class="px-4 py-2 border-b border-gray-200">
         <a href="{% url 'clock_in' %}" class="menu-hover text-gray-600 hover:text-gray-900">Clock In</a>
       </li>

@@ -47,23 +47,23 @@
                             <label for="username" class="leading-7 text-sm text-gray-600">Username</label>
                             {{ form.username }}
                             {% if form.username.errors %}
-                            <ul class="alert alert-danger text-red text-sm">{{ message }}
-                            {% for error in form.username.errors %}
-                                <li>{{ error }}</ul>
-                            {% endfor %}
-                            </ul>
+                              <ul style="color: red" class="alert alert-danger text-red text-sm">{{ message }}
+                                {% for error in form.username.errors %}
+                                  <li>{{ error }}</ul>
+                                {% endfor %}
+                              </ul>
                             {% endif %}
                         </div>
                         <div class="relative mb-4">
                             <label for="password" class="leading-7 text-sm text-gray-600">Password</label>
-                            {{ form.password }}
-                            {% if form.password.errors %}
-                            <ul class="alert alert-danger text-red text-sm">{{ message }}
-                            {% for error in form.password.errors %}
-                                <li>{{ error }}</ul>
-                            {% endfor %}
-                            </ul>
-                            {% endif %}
+                              {{ form.password }}
+                              {% if form.password.errors %}
+                                <ul style="color: red" class="alert alert-danger text-red text-sm">{{ message }}
+                                  {% for error in form.password.errors %}
+                                    <li>{{ error }}</ul>
+                                  {% endfor %}
+                                </ul>
+                              {% endif %}
                         </div>
 
                         {% block submit %}

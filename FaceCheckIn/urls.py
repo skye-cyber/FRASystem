@@ -64,7 +64,7 @@ urlpatterns = [
 
     # process face frames from the camera face data
     path('process_frames/', views.process_frames, name='process_frames'),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.MEDIA_ROOT)
 
 
 # Serving static and media files during development
