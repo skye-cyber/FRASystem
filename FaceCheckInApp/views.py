@@ -31,6 +31,7 @@ from .DetectionAlgorithms import encoder
 from .DetectionAlgorithms.recog0 import FaceMatch
 from .forms import CustomRegistrationForm  # Make sure to import your form
 from .forms import LoginForm
+from .models import Subscription  # Assuming there's a Subscription model
 from .models import ClockIn, CustomUser, Enrollment
 
 # sudo apt-get install webkit2gtk-4.0 gtk+-3.0
@@ -260,6 +261,26 @@ def getLoginPage(request):
 def SignupPage(request):
     form = CustomRegistrationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+
+@login_required
+def subscribe(request):
+    user = request.user
+    name = user.get_full_name()  # Assuming the user model has a method to get full name
+    email = user.email  # Fetch the user's email
+
+    # Check if the user is already subscribed
+    if Subscription.objects.filter(user=user).exists():
+        messages.info(request, 'You are already subscribed!')
+        return redirect('home')  # Or any page you want to redirect to
+
+    # Create a new subscription
+    new_subscription = Subscription.objects.create(
+        user=user, name=name, email=email)
+    new_subscription.save()
+
+    messages.success(request, 'Subscription successful!')
+    return redirect('subscribed')  # Redirect to a success page
 
 
 @csrf_exempt

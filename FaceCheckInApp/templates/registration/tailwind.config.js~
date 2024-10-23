@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    '/home/skye/FRASystem/FaceCheckIn/FaceCheckInApp/templates/**.html', // Include all HTML files
+    '/home/skye/FRASystem/FaceCheckIn/FaceCheckInApp/templates/registratclock_in.html', // Include all HTML files
   ],
   theme: {
     screens: {
@@ -9,7 +9,7 @@ module.exports = {
       md: '768px',
       lg: '1024px',
       xl: '1280px',
-      2xl: '1536px'
+      '2xl': '1536px',
     },
     variants: {
       textAlign: ['responsive'], // Ensure this is present

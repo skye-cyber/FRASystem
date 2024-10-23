@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    '/home/skye/FRASystem/FaceCheckIn/FaceCheckInApp/templates/**.html', // Include all HTML files
+    '/home/skye/FRASystem/FaceCheckIn/FaceCheckInApp/templates/registration/clock_in.html', // Include all HTML files
   ],
   theme: {
     screens: {

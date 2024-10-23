@@ -1,34 +1,99 @@
 {% extends 'enroll.html' %}
 {% load static %}
 
+{% block head %} FRA Clock-in {% endblock %}
+
 {% block title %}
     <title>Clock-In</title>
+    <link href="{% static 'css/clockin.css' %}" rel="stylesheet">
 {% endblock %}
 
-{% block head1 %}
-    <h1 class="text-white text-5xl md:3xl font-bold">
-        Clock-In
-    </h1>
-{% endblock %}
+    {% block button %}
+    <div class="flex items-center justify-center">
+        <button class="snap font-bold shadow-md text-white bg-blue-500 lg:p-4 px-4 py-2 rounded" onclick="startRecognition()">Clock-In</button>
+    </div>
+        {% endblock %}
 
-{% block button %}
-    <button class="snap snap-bt shadow-md text-white bg-blue-500 p-2 rounded" onclick="startRecognition()">Clock-In</button>
-{% endblock %}
+        <!--Use only one stream view box-->
+        {% block stream %}
+            <section class="inset-0 grid grid-cols-1 lg:grid-cols-2 snap-sm gap-4 mt-4 mb-4 w-full overflow-hidden">
+                <!-- Video Section -->
+                <div class="flex justify-center">
+                    <video style="background-image: url('{% static 'images/enroll2.jpeg' %}')"
+                        class="snap-stream container-stream border-2 border-blue-500 rounded-lg bg-blue-100 lg:h-74 lg:w-fit sm:h-60 sm:mr-8 sm:w-72 md:h-[28rem] md:w-[32rem]  transition-transform duration-500 transform group-hover:scale-110"
+                        id="mainVideo"
+                        autoplay></video>
+                </div>
 
-<!--Use only one stream view box-->
-{% block stream %}
-<section class="container md:flex-alt ml-auto gap-4">
-  <video class="snapv container-stream bd-blue-100 mb-2 border-2 justify-center rounded bg-blue-100 h-64 w-72" id="mainVideo" autoplay></video>
-  <img class="snapv container-stream bd-blue-100 justify-center rounded bg-blue-100 h-64 w-72" id="processedVideo"/>
-</section>
-{% endblock %}
+                <!-- Processed Video/Image Section -->
+                <div class="flex justify-center rounded-lg border-blue-400 lg:mr-12">
+                    <img style="background-image: url('{% static 'images/enroll2.jpeg' %}')" class="snapv container-stream border-2 border-blue-100 rounded-lg bg-blue-100 lg:h-74 lg:w-full sm:h-80 sm:w-72 md:h-[28rem] md:w-[20rem]"
+                        id="processedVideo"/>
+                </div>
+            </section>
 
-{% block success %}
-    <p id="message" style="color: green;" class="text-white pb-8 text-center text-red font-bold"></p>
-{% endblock %}
+        {% endblock %}
 
-{% block script %}
+        {% block success %}
+            <p id="message" style="color: #ffff00;" class="text-white pb-8 text-center text-red font-bold"></p>
+        {% endblock %}
+
+    {% block script %}
     <script>
+            let isDisplayed = false;
+
+                function toggleDropdown() {
+                const ops = document.getElementById('dropdown-menu');
+
+                if (!isDisplayed) {
+                    // Show the dropdown menu
+                    ops.style.display = "block";
+                    isDisplayed = true;
+
+                    // Hide menu once mouse leaves it
+                    ops.addEventListener('mouseleave', () => {
+                        ops.style.display = "none";
+                        isDisplayed = false;
+                    });
+
+                } else {
+                    // Hide the dropdown menu
+                    ops.style.display = "none";
+                    isDisplayed = false;
+                }
+                }
+
+                // Optional: Hide the dropdown when clicking outside or when the button is clicked again
+                document.addEventListener('click', function(event) {
+                const ops = document.getElementById('dropdown-menu');
+                const button = document.getElementById('dropdown-button');
+
+                if (!button.contains(event.target)) {
+                    ops.style.display = "none";
+                    isDisplayed = false;
+                }
+                });
+                function hide(){
+                    const ops = document.getElementById('ops');
+                    ops.addEventListener('mouseleave', () =>{
+                    ops.style.display = "none"
+                    });
+                };
+
+
+
+
+        //Handle camera snaps
+        function startEnroll(){
+                startCamera();
+
+            document.addEventListener('keydown', async function(event) {
+                if (event.key === 'Enter') {
+                    await registerEmployee();
+                }
+            });
+        // });
+}
         let recognitionAttempts = 0;
         const maxAttempts = 10;
         let isProcessing = false;
@@ -169,3 +234,5 @@
         window.onload = startCamera;
     </script>
 {% endblock %}
+</body>
+</html>

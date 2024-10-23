@@ -10,32 +10,39 @@
     <link href="{% static 'css/styles2.css' %}" rel="stylesheet">
 </head>
 <body class="bg-gray-800 font-sans leading-normal tracking-normal overflow-x-hidden">
-  <nav class="w-full flex items-center justify-between bg-blue-800 py-4">
-      <div class="relative flex items-center justify-between w-full">
-        <button class="bt-hover font-bold bg-blue-500 rounded-lg px-4 py-1" type="button" id="dropdown-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown()">
-          Menu
-        </button>
-            <ul style="display: none;" class="menu-hover dropdown-menu flex w-fit items-center text-gray-200 hover:text-white dropdown-container absolute left-0 mt-16 w-48 bg-white rounded-lg overflow-hidden shadow-md" id="dropdown-menu">
-              <li class="px-4 py-2 border-b text-lg md:text-3xl border-gray-200">
-              <a href="{% url 'profile' %}" class="text-gray-600 hover:text-gray-900">Profile</a>
+    <nav class="block items-center justify-between w-full flex-wrap bg-blue-800 overflow-x-hidden p-1">
+        <div class="relative flex">
+
+          <button style="z-index: 999; position: fixed;" class="fixed menu-hover font-bold bg-blue-500 rounded-lg px-4 py-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown()">
+            Menu
+            </button>
+
+           <ul style="display: none; z-index: 999; position: fixed; box-shadow: 0px 0px 0px 4px deepskyblue;" class="dropdown-menu border-full flex items-center w-fit text-gray-200 hover:text-white px-3 dropdown-container absolute ml-2 mt-10 w-48 bg-white rounded-lg shadow-md" id="dropdown-menu">
+              <li class="px-4 py-2 border-b border-gray-200">
+                <a href="{% url 'clock_in' %}" class="menu-hover text-gray-600 hover:text-gray-900">Clock In</a>
               </li>
-            </ul>
-          <p class="text-center mx-auto font-bold">User: <i><a class="menu-hover text-white font-bold" href="{% url 'profile' %}">{{ user }}</a></i></p>
-          <button class="font-bold">
-              <a href="{% url 'home' %}" class="bt-hover text-black">🏠Home</a>
-          </button>
+              <li class="px-4 py-2 border-b border-gray-200">
+                <a href="{% url 'profile' %}" class="menu-hover text-gray-600 hover:text-gray-900">Profile</a>
+              </li>
+              <li class="px-4 py-2 border-b border-gray-200">
+                <a href="{% url 'home' %}" class="menu-hover text-gray-600 hover:text-gray-900">🏠 Home</a>
+              </li>
+              <li class="px-4 py-2 border-b border-gray-200">
+                <a href="{% url 'logout' %}" class="menu-hover text-gray-600 hover:text-gray-900">Logout</a>
+              </li>
+          </ul>
         </div>
     </nav>
-
-  <section class="">
-    <div class="container justify-center mx-auto flex px-6 py-4 items-center">
-      {% block head1 %}
-      <h1 class="text-white text-center text-3xl 2xl:text-5xl font-bold ">
-        Enrollment Hub
+  {% block head1 %}
+  <section class="bg-blue-800 pb-2">
+    <p class="text-center">User: <i><a class="menu-hover text-white" href="{% url 'profile' %}">{{user}}</a></i></p>
+    <div class="container mx-auto flex items-center justify-center">
+      <h1 class="text-white text-3xl lg:text-5xl font-bold ">
+        {% block head %} FRA Enrollment {% endblock %}
       </h1>
-      {% endblock %}
     </div>
   </section>
+  {% endblock %}
 
  <section class="focus inset-0 block sm:flex lg:items-center lg:justify-center py-2">
     {% block button %}
@@ -46,7 +53,7 @@
     {% endblock %}
   </section>
             {% block stream %}
-  <section class="fixed inset-0 flex items-center justify-center mb-4">
+  <section class="fixed inset-0 flex snap-sm items-center justify-center mb-4">
           <!-- Floating centered video container -->
 
           <video style="background-image: url('{% static 'images/enroll1.jpeg' %}')" class="snap-stream container-stream border-2 mb-2 border-blue-500 rounded-lg bg-blue-100 h-72 w-fit sm:h-80 sm:w-96 md:h-[28rem] md:w-[32rem] lg:h-[30rem] lg:w-[36rem] transition-transform duration-500 transform group-hover:scale-110" id="mainVideo" autoplay>
@@ -73,7 +80,7 @@
 
           if (!isDisplayed) {
               // Show the dropdown menu
-              ops.style.display = "flex";
+              ops.style.display = "block";
               isDisplayed = true;
 
               // Hide menu once mouse leaves it

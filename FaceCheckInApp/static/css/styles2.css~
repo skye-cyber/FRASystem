@@ -613,10 +613,6 @@ video {
   margin-bottom: 3rem;
 }
 
-.mb-4 {
-  margin-bottom: 1rem;
-}
-
 .mb-6 {
   margin-bottom: 1.5rem;
 }
@@ -625,8 +621,56 @@ video {
   margin-bottom: 2rem;
 }
 
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
 .mr-2 {
   margin-right: 0.5rem;
+}
+
+.mr-4 {
+  margin-right: 1rem;
+}
+
+.mr-6 {
+  margin-right: 1.5rem;
+}
+
+.mr-8 {
+  margin-right: 2.5rem;
+}
+
+.mr-12 {
+  margin-right: 3rem;
+}
+
+.mr-16 {
+  margin-right: 5rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+.mr-4 {
+  margin-right: 1rem;
+}
+
+.mr-6 {
+  margin-right: 1.5rem;
+}
+
+.mr-8 {
+  margin-right: 2.5rem;
+}
+
+.mr-12 {
+  margin-right: 3rem;
+}
+
+.mr-16 {
+  margin-right: 5rem;
 }
 
 .mt-12 {
@@ -642,7 +686,7 @@ video {
 }
 
 .mt-10 {
-  margin-top: 4rem;
+  margin-top: 3rem;
 }
 
 .mt-12 {
@@ -724,6 +768,18 @@ video {
 
 .flex-grow {
   flex-grow: 1;
+}
+
+.transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.list-inside {
+  list-style-position: inside;
+}
+
+.list-disc {
+  list-style-type: disc;
 }
 
 .appearance-none {
@@ -1037,6 +1093,14 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .hover\:bg-blue-400:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(96 165 250 / var(--tw-bg-opacity));
@@ -1098,6 +1162,13 @@ video {
   }
 }
 
+@media (min-width: 1024px) {
+  .lg\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+}
+
 .text-green{
   color:green;
 }
@@ -1127,17 +1198,17 @@ video {
 }
 
 /*style hover on the stream containers boxes*/
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .container-stream:hover{
     background-color: rgb(145, 195, 197);
-    box-shadow: 0px 0px 1px 2px gold;
+    box-shadow: 0px 0px 1px 2px cyan;
   }
 }
 
 @media (min-width: 768px) {
   .container-stream:hover{
     background-color: rgb(145, 195, 197);
-    box-shadow: 0px 0px 1px 2px gold;
+    box-shadow: 0px 0px 1px 2px #ff007f;
   }
 }
 /* stle media stream containers*/
@@ -1177,7 +1248,6 @@ video {
 .snap-stream:hover{
    border-color:purple;
    transform: scale(1.05);
-   transition
 }
 
 .circle-image {
@@ -1186,4 +1256,41 @@ video {
   border-radius: 60%;  /* Makes the image circular */
   object-fit: cover;  /* Ensures the image covers the container properly */
   overflow: hidden;   /* Ensures any overflow is clipped */
+}
+
+.card:hover {
+  box-shadow: 8px 6px 5px 2px red;
+  border: 4px solid navy;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .snap-sm{
+  margin-left:4%;
+  margin-right:5%;
+  }
+}
+
+@media (min-width: 768px) {
+  .flex-stream{
+    display:flex;
+  }
+}
+
+}
+
+/* Define custom margin-right for md:mr-8 */
+@media (min-width: 768px) {
+  .lg\:mr-8 {
+    margin-right: 2rem; /* 32px */
+  }
+
+  /* Define custom margin-right for md:mr-12 */
+  .lg\:mr-12 {
+    margin-right: 3rem; /* 48px */
+  }
+}
+
+.overflow-x-hidden{
+  overflow-x:hidden;
 }
