@@ -29,7 +29,8 @@
               <a href="{% url 'profile' %}" class="menu-hover text-gray-600 hover:text-gray-900">Profile</a>
               </li>
             <li class="px-4 py-2 border-b border-gray-200">
-            <a href="{% url 'logout' %}" class="menu-hover text-gray-600 hover:text-gray-900">Logout</a></li>
+            <a href="{% url 'logout' %}" class="menu-hover text-gray-600 hover:text-gray-900">Logout</a>
+            </li>
           </ul>
           {% endblock %}
           
